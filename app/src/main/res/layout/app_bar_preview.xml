@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PreviewActivity">
+
+    <com.onlylemi.android.capture.PreviewSurface
+        android:id="@+id/preview_surface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.onlylemi.android.capture.ColorCrosshairView
+        android:id="@+id/crosshair"
+        android:layout_width="1.0999756in"
+        android:layout_height="1.0999756in"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>
