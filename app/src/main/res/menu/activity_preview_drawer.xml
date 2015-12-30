@@ -9,12 +9,16 @@
         <item
             android:id="@+id/nav_preview"
             android:checked="true"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Camera View" />
         <item
             android:id="@+id/nav_set_colorid"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Color Recognition " />
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Color Recognition" />
+        <item
+            android:id="@+id/nav_set_sense"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Android Sensor" />
     </group>
 
 </menu>

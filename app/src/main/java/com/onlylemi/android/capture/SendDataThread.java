@@ -1,7 +1,5 @@
 package com.onlylemi.android.capture;
 
-import android.util.Log;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,7 +10,7 @@ public class SendDataThread extends Thread {
 
     public final static String TAG = "SendDataThread:";
 
-    private byte byteBuffer[] = new byte[1024];
+    private byte[] byteBuffer = new byte[1024];
     private OutputStream outsocket;
     private ByteArrayOutputStream myoutputstream;
     private String ipname;

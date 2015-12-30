@@ -2,7 +2,27 @@
     <string name="app_name">AndroidCapture</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="android_sense">Android Sensor</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <array name="sensor_names">
+        <!-- 加速度传感器-->
+        <item>ACCELEROMETER SENSOR</item>
+        <!-- 光线传感器-->
+        <item>LIGHT SENSOR</item>
+        <!-- 方向传感器-->
+        <item>ORIENTATION SENSOR</item>
+        <!--距离传感器-->
+        <item>PROXIMITY SENSOR</item>
+        <!--温度传感器-->
+        <item>TEMPERATURE SENSOR</item>
+        <!--压力传感器-->
+        <item>PRESSURE SENSOR</item>
+        <!--陀螺仪传感器-->
+        <item>GYROSCOPE SENSOR</item>
+        <!--地磁传感器-->
+        <item>MAGNETIC FIELD SENSOR</item>
+    </array>
 </resources>
