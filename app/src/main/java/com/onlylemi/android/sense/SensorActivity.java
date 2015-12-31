@@ -2,12 +2,10 @@ package com.onlylemi.android.sense;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SensorActivity extends AppCompatActivity implements SensorEventListener {
@@ -34,6 +31,9 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     public final static int[] TYPE_SENSORS = {Sensor.TYPE_ACCELEROMETER, Sensor.TYPE_LIGHT, Sensor
             .TYPE_ORIENTATION, Sensor.TYPE_PROXIMITY, Sensor.TYPE_TEMPERATURE, Sensor
             .TYPE_PRESSURE, Sensor.TYPE_GYROSCOPE, Sensor.TYPE_MAGNETIC_FIELD};
+    public final static String[] NAME_SENSORS = {"TYPE_ACCELEROMETER", "TYPE_LIGHT",
+            "TYPE_ORIENTATION", "TYPE_PROXIMITY", "TYPE_TEMPERATURE"
+            , "TYPE_PRESSURE", "TYPE_GYROSCOPE", "TYPE_MAGNETIC_FIELD"};
 
     private ListView sensorListView = null;
     private SensorListAdapter sensorListAdapter = null;
@@ -136,72 +136,47 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        JSONObject json = new JSONObject();
-
         JSONArray jsonArray = new JSONArray();
-        switch (sensorEvent.sensor.getType()) {
-            case Sensor.TYPE_ACCELEROMETER:
-                jsonArray.put("TYPE_ACCELEROMETER");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_LIGHT:
-                jsonArray.put("TYPE_LIGHT");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_ORIENTATION:
-                jsonArray.put("TYPE_ORIENTATION");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_PROXIMITY:
-                jsonArray.put("TYPE_PROXIMITY");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_TEMPERATURE:
-                jsonArray.put("TYPE_TEMPERATURE");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_PRESSURE:
-                jsonArray.put("TYPE_PRESSURE");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_GYROSCOPE:
-                jsonArray.put("TYPE_GYROSCOPE");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                jsonArray.put("TYPE_MAGNETIC_FIELD");
-                jsonArray.put(addJsonObject(sensorEvent));
-                break;
-            default:
-                break;
+        for (int i = 0; i < TYPE_SENSORS.length; i++) {
+            if (sensorEvent.sensor.getType() == TYPE_SENSORS[i]) {
+                JSONObject jo = new JSONObject();
+                try {
+                    jo.put(NAME_SENSORS[i], addJsonObject(sensorEvent));
+                    jsonArray.put(jo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
+        JSONObject json = new JSONObject();
         try {
             json.put("ANDROID_SENSOR", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        Log.i(TAG, "qian" + json.toString());
+        //Log.i(TAG, "origin:" + json.toString());
+
+        // encapsulation json data to i/o
         byte[] byteBuffer = new byte[1024];
         ByteArrayInputStream inputStream = new ByteArrayInputStream(json.toString().getBytes());
-        ByteArrayOutputStream outputStrem = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             int amount;
             while ((amount = inputStream.read(byteBuffer)) != -1) {
-                outputStrem.write(byteBuffer, 0, amount);
+                outputStream.write(byteBuffer, 0, amount);
             }
             inputStream.close();
-            outputStrem.close();
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Log.i(TAG, "hou1" + new String(outputStrem.toByteArray()));
-        Log.i(TAG, "hou2" + outputStrem.toByteArray().toString());
+        //Log.i(TAG, "encapsulation:" + new String(outputStream.toByteArray()));
 
         // send json data to server
-        Thread th = new SendDataThread(outputStrem, ipname);
+        Thread th = new SendDataThread(outputStream, ipname, 6001);
         th.start();
     }
 
@@ -215,15 +190,15 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
      * @return
      */
     private JSONObject addJsonObject(SensorEvent sensorEvent) {
-        JSONObject jo1 = new JSONObject();
+        JSONObject jo = new JSONObject();
         try {
-            jo1.put("value0", sensorEvent.values[0]);
-            jo1.put("value1", sensorEvent.values[1]);
-            jo1.put("value2", sensorEvent.values[2]);
+            jo.put("value0", new Double(String.valueOf(sensorEvent.values[0])));
+            jo.put("value1", new Double(String.valueOf(sensorEvent.values[1])));
+            jo.put("value2", new Double(String.valueOf(sensorEvent.values[2])));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return jo1;
+        return jo;
     }
 
     /**

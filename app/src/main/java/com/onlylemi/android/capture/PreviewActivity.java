@@ -3,6 +3,7 @@ package com.onlylemi.android.capture;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class PreviewActivity extends AppCompatActivity
 
     private String ipname = ""; // ip address
 
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +36,12 @@ public class PreviewActivity extends AppCompatActivity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.activity_preview);
 
+        sp = getSharedPreferences("sp", 0);
+        ipname = sp.getString("ipname", "");
 
+        // camera view
         previewSurface = (PreviewSurface) findViewById(R.id.preview_surface);
-
+        // color id view
         crosshairView = (ColorCrosshairView) findViewById(R.id.crosshair);
         crosshairView.setVisibility(View.GONE);
 
@@ -73,15 +79,21 @@ public class PreviewActivity extends AppCompatActivity
                 null);
         builder.setView(loginForm);
         final EditText ipnameEdit = (EditText) loginForm.findViewById(R.id.ipname);
-        ipname = ipnameEdit.getText().toString().trim();
+        ipnameEdit.setText(ipname);
         builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                ipname = ipnameEdit.getText().toString().trim();
+                sp.edit().putString("ipname", ipname).commit();
+
                 previewSurface.setIP(ipnameEdit.getText().toString().trim());
                 Log.i(TAG, "ipname:" + ipnameEdit.getText().toString());
 
-                Toast.makeText(PreviewActivity.this, "服务器地址：" + ipnameEdit.getText().toString(),
+                Toast.makeText(PreviewActivity.this, "connected server : " + ipnameEdit.getText()
+                                .toString(),
                         Toast.LENGTH_SHORT).show();
+
+
             }
         });
         builder.create().show();

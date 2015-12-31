@@ -40,7 +40,7 @@ public class PreviewSurface extends CameraSurface implements
                         80, outstream);
                 outstream.flush();
                 //start thread to send image data
-                Thread th = new SendDataThread(outstream, ipname);
+                Thread th = new SendDataThread(outstream, ipname, 6000);
                 th.start();
             }
         } catch (Exception ex) {
@@ -48,7 +48,8 @@ public class PreviewSurface extends CameraSurface implements
         }
 
         if (listener != null) {
-            int color = BitmapFactory.decodeStream(new ByteArrayInputStream(outstream.toByteArray())).getPixel(size.width / 2, size.height / 2);
+            int color = BitmapFactory.decodeStream(new ByteArrayInputStream(outstream.toByteArray
+                    ())).getPixel(size.width / 2, size.height / 2);
             listener.onColor(color);
         }
 

@@ -14,10 +14,13 @@ public class SendDataThread extends Thread {
     private OutputStream outsocket;
     private ByteArrayOutputStream myoutputstream;
     private String ipname;
+    private int port;
 
-    public SendDataThread(ByteArrayOutputStream myoutputstream, String ipname) {
+    public SendDataThread(ByteArrayOutputStream myoutputstream, String ipname, int port) {
         this.myoutputstream = myoutputstream;
         this.ipname = ipname;
+        this.port = port;
+
         try {
             myoutputstream.close();
         } catch (IOException e) {
@@ -29,7 +32,7 @@ public class SendDataThread extends Thread {
         try {
             // send image data by socket
             if (!"".equals(ipname) && null != ipname) {
-                Socket tempSocket = new Socket(ipname, 6000);
+                Socket tempSocket = new Socket(ipname, port);
                 outsocket = tempSocket.getOutputStream();
                 ByteArrayInputStream inputstream = new ByteArrayInputStream(
                         myoutputstream.toByteArray());
