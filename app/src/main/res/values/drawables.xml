@@ -7,13 +7,13 @@
     <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
 
     <array name="sensor_image">
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
-        <item>@drawable/ic_menu_camera</item>
+        <item>@mipmap/asteroid104</item>
+        <item>@mipmap/light_automation_filled100</item>
+        <item>@mipmap/define_location104</item>
+        <item>@mipmap/ruler96</item>
+        <item>@mipmap/temperature104</item>
+        <item>@mipmap/pressure104</item>
+        <item>@mipmap/gyroscope96</item>
+        <item>@mipmap/protect_from_magnetic_field104</item>
     </array>
 </resources>

@@ -1,5 +1,6 @@
 package com.onlylemi.android.sense;
 
+import android.hardware.Sensor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -64,20 +65,35 @@ public class SensorListAdapter extends BaseAdapter {
         holder.sensorImageView.setImageResource(list.get(i).getImageId());
 
         final int index = i;
+        final ViewHolder finalHolder = holder;
         holder.sensorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
                 () {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    Toast.makeText(context, list.get(index).getName() + " ON", Toast
-                            .LENGTH_SHORT)
-                            .show();
-                    context.registerListener(context, SensorActivity.TYPE_SENSORS[index]);
-                } else {
-                    Toast.makeText(context, list.get(index).getName() + " OFF", Toast
-                            .LENGTH_SHORT)
-                            .show();
-                    context.unRegisterListener(context, SensorActivity.TYPE_SENSORS[index]);
+
+                int j;
+                for (j = 0; j < context.getSensors().size(); j++) {
+                    if (context.getSensors().get(j).getType() == SensorActivity
+                            .TYPE_SENSORS[index]) {
+                        if (b) {
+                            Toast.makeText(context, list.get(index).getName() + " ON", Toast
+                                    .LENGTH_SHORT)
+                                    .show();
+                            context.registerListener(context, SensorActivity.TYPE_SENSORS[index]);
+                        } else {
+                            Toast.makeText(context, list.get(index).getName() + " OFF", Toast
+                                    .LENGTH_SHORT)
+                                    .show();
+                            context.unRegisterListener(context, SensorActivity.TYPE_SENSORS[index]);
+                        }
+                        break;
+                    }
+
+                    if (j == context.getSensors().size() - 1) {
+                        Toast.makeText(context, "The sensor isn't supported in your phone!!!",
+                                Toast.LENGTH_SHORT).show();
+                        finalHolder.sensorSwitch.setChecked(false);
+                    }
                 }
             }
         });

@@ -40,6 +40,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     private List<SensorInfo> sensorList;
 
     private SensorManager sensorManager = null;
+    private List<Sensor> sensors;
 
     private String ipname = "";
 
@@ -66,6 +67,8 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         Log.i(TAG, "sensorListAdapter init");
 
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+
+        sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
     }
 
     @Override
@@ -220,5 +223,9 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
      */
     public void unRegisterListener(SensorEventListener listener, int type) {
         sensorManager.unregisterListener(listener, sensorManager.getDefaultSensor(type));
+    }
+
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 }
