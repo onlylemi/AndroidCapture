@@ -9,13 +9,10 @@ It's only beta named **''Beta1.0''**. Welcome to try it and if there is a proble
 
 I will add most `Android sense` in **"Beta2.0"** and make it work in [openframeworks](http://www.openframeworks.cc/). 
 
-![setting IP](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture1.jpg)
+![setting view](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture1.jpg)
 
-![camera view](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture2.jpg)
+![camera ip](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture2.jpg)
 
 ![color recognition](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture3.jpg)
 
 ![color recognition](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture4.jpg)
-
-![color recognition](https://raw.githubusercontent.com/onlylemi/AndroidCapture/master/androidcapture5.jpg)
-
