@@ -1,14 +1,14 @@
 package com.onlylemi.android.capture;
 
-import java.io.IOException;
-import java.util.Iterator;
-
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -66,8 +66,8 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void surfaceCreated(SurfaceHolder paramSurfaceHolder) {
-        camera = Camera.open();
         try {
+            camera = Camera.open();
             camera.setPreviewDisplay(paramSurfaceHolder);
             return;
         } catch (IOException localIOException) {
